@@ -22,23 +22,23 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
   
   switch (status) {
     case "Einzug ausstehend":
-      bgColor = "bg-status-pending text-black";
+      bgColor = "bg-[#F7ECB5] text-black"; // Yellow
       icon = <ArrowDown className="w-3 h-3 mr-1" />;
       break;
     case "Eingezogen":
-      bgColor = "bg-status-completed text-black";
+      bgColor = "bg-[#DBF3B7] text-black"; // Green
       icon = <Check className="w-3 h-3 mr-1" />;
       break;
     case "Rückerstattung ausstehend":
-      bgColor = "bg-status-refund text-black";
+      bgColor = "bg-[#F7ECB5] text-black"; // Yellow
       icon = <ArrowUp className="w-3 h-3 mr-1" />;
       break;
     case "Rückerstattet":
-      bgColor = "bg-status-refunded text-black";
+      bgColor = "bg-[#DBF3B7] text-black"; // Green
       icon = <Check className="w-3 h-3 mr-1" />;
       break;
     case "Fehler":
-      bgColor = "bg-status-error text-white";
+      bgColor = "bg-[#FEE5D9] text-black"; // Red
       icon = <X className="w-3 h-3 mr-1" />;
       break;
     default:

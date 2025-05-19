@@ -24,7 +24,7 @@ export const PaymentOverview = () => {
     },
     insurance: {
       amount: "€320,00",
-      status: "Rückerstattung ausstehend" as const
+      status: "Eingezogen" as const // Same status as carRental
     }
   };
   
