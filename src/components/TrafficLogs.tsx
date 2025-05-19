@@ -2,16 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { HistoryIcon, CalendarIcon, ClockIcon } from "lucide-react";
+import { HistoryIcon, CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { StatusBadge } from "./StatusBadge";
 
 interface TrafficLogEntry {
   id: string;
   timestamp: string;
   action: string;
-  event_type: string;
+  event_type: "customer_targets" | "customer_actuals" | "vendor_targets" | "vendor_actuals";
   value: string;
   verification_status: string;
   verification_date: string;
@@ -29,21 +29,21 @@ export const TrafficLogs = () => {
       id: "log-001",
       timestamp: "2025-05-19 08:12:23",
       action: "Zahlungseingang",
-      event_type: "Transaktion",
+      event_type: "customer_actuals",
       value: "€125.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-19",
       due_date: "2025-05-25",
       comment: "Kundeneinzahlung für Mietwagen",
       billing_state: "Vollständig",
-      status: "Eingezogen",
+      status: "Ausstehend",
       details: "Kundeneinzahlung für Mietwagen"
     },
     {
       id: "log-002",
       timestamp: "2025-05-19 08:15:45",
       action: "Versicherungsbestätigung",
-      event_type: "Dokument",
+      event_type: "customer_targets",
       value: "€45.50",
       verification_status: "Ausstehend",
       verification_date: "2025-05-19",
@@ -57,35 +57,35 @@ export const TrafficLogs = () => {
       id: "log-003",
       timestamp: "2025-05-19 10:30:12",
       action: "Punkte gutgeschrieben",
-      event_type: "Bonus",
+      event_type: "vendor_actuals",
       value: "120 Punkte",
       verification_status: "Verifiziert",
       verification_date: "2025-05-19",
       due_date: "2025-05-19",
       comment: "Bonuspunkte für Kunde hinzugefügt",
       billing_state: "Vollständig",
-      status: "In Auszahlung",
+      status: "Eingezogen",
       details: "Bonuspunkte für Kunde hinzugefügt"
     },
     {
       id: "log-004",
       timestamp: "2025-05-19 14:45:30",
       action: "Vermieterzahlung geplant",
-      event_type: "Planung",
+      event_type: "vendor_targets",
       value: "€350.00",
       verification_status: "Geplant",
       verification_date: "2025-05-26",
       due_date: "2025-05-26",
       comment: "Zahlungsplan erstellt",
       billing_state: "Ausstehend",
-      status: "Auszahlung am 26.05.25",
+      status: "Eingezogen",
       details: "Zahlungsplan erstellt"
     },
     {
       id: "log-005",
       timestamp: "2025-05-18 09:22:15",
       action: "Mietwagenreservierung",
-      event_type: "Buchung",
+      event_type: "customer_targets",
       value: "€480.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-18",
@@ -99,42 +99,42 @@ export const TrafficLogs = () => {
       id: "log-006",
       timestamp: "2025-05-18 09:25:40",
       action: "Versicherungsanfrage",
-      event_type: "Anforderung",
+      event_type: "customer_actuals",
       value: "€45.50",
       verification_status: "Ausstehend",
       verification_date: "-",
       due_date: "2025-05-19",
       comment: "Versicherungsoption hinzugefügt",
       billing_state: "Ausstehend",
-      status: "Einzug ausstehend",
+      status: "Eingezogen",
       details: "Versicherungsoption hinzugefügt"
     },
     {
       id: "log-007",
       timestamp: "2025-05-18 11:30:55",
       action: "Punkteberechnung",
-      event_type: "System",
+      event_type: "vendor_actuals",
       value: "85 Punkte",
       verification_status: "Automatisch",
       verification_date: "2025-05-18",
       due_date: "-",
       comment: "Treuepunkte kalkuliert",
       billing_state: "Automatisch",
-      status: "Einzug ausstehend",
+      status: "Eingezogen",
       details: "Treuepunkte kalkuliert"
     },
     {
       id: "log-008",
       timestamp: "2025-05-17 15:40:20",
       action: "Mietvertrag erstellt",
-      event_type: "Dokument",
+      event_type: "vendor_targets",
       value: "€0.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-17",
       due_date: "2025-05-17",
       comment: "Vertrag mit Standardkonditionen",
       billing_state: "Nicht zutreffend",
-      status: "Einzug ausstehend",
+      status: "Eingezogen",
       details: "Vertrag mit Standardkonditionen"
     },
   ]);
@@ -168,15 +168,23 @@ export const TrafficLogs = () => {
                   borderLeftColor: index % 2 === 0 ? '#6366f1' : '#8b5cf6'
                 }}>
                   <div className="flex flex-col space-y-2">
-                    {/* Header row with timestamp and action */}
+                    {/* Header row with log type and status */}
                     <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <ClockIcon className="w-3.5 h-3.5 text-gray-400" />
-                        <p className="text-xs text-gray-500">{log.timestamp}</p>
+                      <div className="font-semibold text-sm capitalize">
+                        {log.event_type.replace("_", " ")}
                       </div>
-                      <Badge variant="outline" className="text-xs font-normal">
-                        {log.event_type}
-                      </Badge>
+                      
+                      <div>
+                        {index === 0 ? (
+                          <div className="px-2 py-1 bg-[#F7ECB5] text-xs font-medium rounded-full">
+                            Ausstehend
+                          </div>
+                        ) : (
+                          <div className="px-2 py-1 bg-[#DBF3B7] text-xs font-medium rounded-full">
+                            Eingezogen
+                          </div>
+                        )}
+                      </div>
                     </div>
                     
                     {/* Main content grid */}
@@ -190,8 +198,8 @@ export const TrafficLogs = () => {
                         <p className="text-sm">{log.value}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">Status:</p>
-                        <p className="text-sm">{log.status}</p>
+                        <p className="text-xs text-gray-500">Billing State:</p>
+                        <p className="text-sm">{log.billing_state}</p>
                       </div>
                       <div>
                         <p className="text-xs text-gray-500">Verifikation:</p>
@@ -208,13 +216,9 @@ export const TrafficLogs = () => {
                           <p className="text-sm">{log.due_date}</p>
                         </div>
                       </div>
-                      <div className="col-span-2">
+                      <div className="col-span-3">
                         <p className="text-xs text-gray-500">Kommentar:</p>
                         <p className="text-sm">{log.comment}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Abrechnungsstatus:</p>
-                        <p className="text-sm">{log.billing_state}</p>
                       </div>
                     </div>
                     
