@@ -1,10 +1,14 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink } from "lucide-react";
+import { RefundDialog } from "@/components/RefundDialog";
 
 export const DetailsSidebar = () => {
+  const [isRefundDialogOpen, setIsRefundDialogOpen] = useState(false);
+  
   return (
     <div className="space-y-6">
       {/* General Details */}
@@ -30,16 +34,12 @@ export const DetailsSidebar = () => {
               <span className="font-medium text-xs break-all">pp__gFBt9WfXkgUPA_NfeNM9w8cXGKDx</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-500">Datum</span>
-              <span className="font-medium">12.05.2025</span>
-            </div>
-            <div className="grid grid-cols-2 text-sm">
               <span className="text-gray-500">Kunde</span>
               <span className="font-medium">Max Mustermann</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-500">Status</span>
-              <span className="font-medium">In Bearbeitung</span>
+              <span className="text-gray-500">Storniert?</span>
+              <span className="font-medium">Nein</span>
             </div>
           </div>
         </CardContent>
@@ -49,12 +49,24 @@ export const DetailsSidebar = () => {
       <div>
         <h3 className="font-semibold mb-3 text-sm text-gray-600">Schnelle Aktionen</h3>
         <div className="grid gap-2">
-          <Button className="justify-start" variant="secondary">Zahlung bestätigen</Button>
-          <Button className="justify-start" variant="secondary">Rückerstattung starten</Button>
-          <Button className="justify-start" variant="secondary">Nachricht senden</Button>
-          <Button className="justify-start" variant="outline">Details exportieren</Button>
+          <Button 
+            className="justify-start" 
+            variant="secondary"
+            onClick={() => setIsRefundDialogOpen(true)}
+          >
+            Kulanzzahlung an Kunden
+          </Button>
+          <Button className="justify-start" variant="secondary">Chargeback beantworten</Button>
+          <Button className="justify-start" variant="secondary">Stornierungsgebühren ändern</Button>
+          <Button className="justify-start" variant="secondary">Preis Differenz eintragen</Button>
+          <Button className="justify-start" variant="secondary">Rückzahlung anstoßen</Button>
         </div>
       </div>
+      
+      <RefundDialog 
+        open={isRefundDialogOpen} 
+        onOpenChange={setIsRefundDialogOpen}
+      />
     </div>
   );
 };
