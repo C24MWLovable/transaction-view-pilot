@@ -10,6 +10,7 @@ type StatusType =
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"
+  | "Auszahlung am 26.05.25"
   | "Fehler";
 
 interface PaymentItemProps {

@@ -35,7 +35,7 @@ export const PaymentOverview = () => {
   const landlordData = {
     payment: {
       amount: "€1.570,00", 
-      status: "Einzug ausstehend" as const
+      status: "Auszahlung am 26.05.25" as const
     }
   };
   

@@ -10,6 +10,7 @@ type StatusType =
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"
+  | "Auszahlung am 26.05.25"
   | "Fehler";
 
 interface StatusBadgeProps {
@@ -39,6 +40,10 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
       icon = <Check className="w-3 h-3 mr-1" />;
       break;
     case "In Auszahlung":
+      bgColor = "bg-[#F7ECB5] text-black"; // Yellow
+      icon = <Clock className="w-3 h-3 mr-1" />;
+      break;
+    case "Auszahlung am 26.05.25":
       bgColor = "bg-[#F7ECB5] text-black"; // Yellow
       icon = <Clock className="w-3 h-3 mr-1" />;
       break;

@@ -60,6 +60,7 @@ export const DetailsSidebar = () => {
           <Button className="justify-start" variant="secondary">Stornierungsgebühren ändern</Button>
           <Button className="justify-start" variant="secondary">Preis Differenz eintragen</Button>
           <Button className="justify-start" variant="secondary">Rückzahlung anstoßen</Button>
+          <Button className="justify-start" variant="secondary">Vermieter Transfer Datum bearbeiten</Button>
         </div>
       </div>
       
