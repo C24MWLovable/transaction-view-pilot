@@ -11,7 +11,7 @@ interface TrafficLogEntry {
   id: string;
   timestamp: string;
   action: string;
-  event_type: "customer_targets" | "customer_actuals" | "vendor_targets" | "vendor_actuals";
+  event_type: "customer_target" | "customer_actual" | "vendor_target" | "vendor_actual";
   value: string;
   verification_status: string;
   verification_date: string;
@@ -29,7 +29,7 @@ export const TrafficLogs = () => {
       id: "log-001",
       timestamp: "2025-05-19 08:12:23",
       action: "Zahlungseingang",
-      event_type: "customer_actuals",
+      event_type: "customer_actual",
       value: "€125.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-19",
@@ -43,7 +43,7 @@ export const TrafficLogs = () => {
       id: "log-002",
       timestamp: "2025-05-19 08:15:45",
       action: "Versicherungsbestätigung",
-      event_type: "customer_targets",
+      event_type: "customer_target",
       value: "€45.50",
       verification_status: "Ausstehend",
       verification_date: "2025-05-19",
@@ -57,7 +57,7 @@ export const TrafficLogs = () => {
       id: "log-003",
       timestamp: "2025-05-19 10:30:12",
       action: "Punkte gutgeschrieben",
-      event_type: "vendor_actuals",
+      event_type: "vendor_actual",
       value: "120 Punkte",
       verification_status: "Verifiziert",
       verification_date: "2025-05-19",
@@ -71,7 +71,7 @@ export const TrafficLogs = () => {
       id: "log-004",
       timestamp: "2025-05-19 14:45:30",
       action: "Vermieterzahlung geplant",
-      event_type: "vendor_targets",
+      event_type: "vendor_target",
       value: "€350.00",
       verification_status: "Geplant",
       verification_date: "2025-05-26",
@@ -85,7 +85,7 @@ export const TrafficLogs = () => {
       id: "log-005",
       timestamp: "2025-05-18 09:22:15",
       action: "Mietwagenreservierung",
-      event_type: "customer_targets",
+      event_type: "customer_target",
       value: "€480.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-18",
@@ -99,7 +99,7 @@ export const TrafficLogs = () => {
       id: "log-006",
       timestamp: "2025-05-18 09:25:40",
       action: "Versicherungsanfrage",
-      event_type: "customer_actuals",
+      event_type: "customer_actual",
       value: "€45.50",
       verification_status: "Ausstehend",
       verification_date: "-",
@@ -113,7 +113,7 @@ export const TrafficLogs = () => {
       id: "log-007",
       timestamp: "2025-05-18 11:30:55",
       action: "Punkteberechnung",
-      event_type: "vendor_actuals",
+      event_type: "vendor_actual",
       value: "85 Punkte",
       verification_status: "Automatisch",
       verification_date: "2025-05-18",
@@ -127,7 +127,7 @@ export const TrafficLogs = () => {
       id: "log-008",
       timestamp: "2025-05-17 15:40:20",
       action: "Mietvertrag erstellt",
-      event_type: "vendor_targets",
+      event_type: "vendor_target",
       value: "€0.00",
       verification_status: "Verifiziert",
       verification_date: "2025-05-17",
@@ -144,6 +144,27 @@ export const TrafficLogs = () => {
     new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   );
 
+  // Function to get the border color based on event type
+  const getBorderColor = (eventType: string) => {
+    switch(eventType) {
+      case "customer_target":
+        return "#6366f1"; // Indigo
+      case "customer_actual":
+        return "#8b5cf6"; // Purple
+      case "vendor_target":
+        return "#10b981"; // Green
+      case "vendor_actual":
+        return "#06b6d4"; // Cyan
+      default:
+        return "#6366f1";
+    }
+  };
+  
+  // Function to format event type display (removing plural 's')
+  const formatEventType = (eventType: string) => {
+    return eventType.replace('_', ' ').replace(/s$/, '');
+  };
+
   const handleRestoreState = (logId: string) => {
     // This would actually restore the state in a real application
     toast.success(`Zustand von Log ${logId} wiederhergestellt`);
@@ -158,20 +179,22 @@ export const TrafficLogs = () => {
           {/* Timeline vertical line */}
           <div className="absolute left-8 top-6 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 to-gray-200 z-0"></div>
           
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {sortedLogs.map((log, index) => (
               <div key={log.id} className="relative">
-                {/* Timeline dot */}
-                <div className="absolute left-8 top-6 w-2.5 h-2.5 rounded-full bg-blue-500 transform -translate-x-1 z-10"></div>
+                {/* Timeline dot - now centered vertically relative to the card */}
+                <div className="absolute left-8 top-1/2 w-2.5 h-2.5 rounded-full bg-blue-500 transform -translate-x-1 -translate-y-1/2 z-10"></div>
                 
-                <Card key={log.id} className="p-3 shadow-sm ml-14 border-l-4" style={{
-                  borderLeftColor: index % 2 === 0 ? '#6366f1' : '#8b5cf6'
-                }}>
-                  <div className="flex flex-col space-y-2">
+                <Card 
+                  key={log.id} 
+                  className="p-2.5 shadow-sm ml-14 border-l-4" 
+                  style={{ borderLeftColor: getBorderColor(log.event_type) }}
+                >
+                  <div className="flex flex-col space-y-1.5">
                     {/* Header row with log type and status */}
                     <div className="flex justify-between items-center">
                       <div className="font-semibold text-sm capitalize">
-                        {log.event_type.replace("_", " ")}
+                        {formatEventType(log.event_type)}
                       </div>
                       
                       <div>
@@ -187,47 +210,40 @@ export const TrafficLogs = () => {
                       </div>
                     </div>
                     
-                    {/* Main content grid */}
-                    <div className="grid grid-cols-3 gap-x-4 gap-y-2">
+                    {/* Main content grid - restructured as requested */}
+                    <div className="grid grid-cols-3 gap-x-4 gap-y-1.5">
+                      {/* Column 1: Action and Value */}
                       <div>
                         <p className="text-xs text-gray-500">Aktion:</p>
                         <p className="text-sm font-medium">{log.action}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Wert:</p>
+                        <p className="text-xs text-gray-500 mt-1">Wert:</p>
                         <p className="text-sm">{log.value}</p>
                       </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Billing State:</p>
-                        <p className="text-sm">{log.billing_state}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Verifikation:</p>
-                        <p className="text-sm">{log.verification_status}</p>
-                      </div>
+
+                      {/* Column 2: Verification Date and Due Date */}
                       <div>
                         <p className="text-xs text-gray-500">Verifikationsdatum:</p>
                         <p className="text-sm">{log.verification_date}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Fälligkeitsdatum:</p>
+                        <p className="text-xs text-gray-500 mt-1">Fälligkeitsdatum:</p>
                         <div className="flex items-center">
                           {log.due_date !== "-" && <CalendarIcon className="w-3 h-3 mr-1 text-gray-400" />}
                           <p className="text-sm">{log.due_date}</p>
                         </div>
                       </div>
-                      <div className="col-span-3">
+
+                      {/* Column 3: Comment */}
+                      <div>
                         <p className="text-xs text-gray-500">Kommentar:</p>
                         <p className="text-sm">{log.comment}</p>
                       </div>
                     </div>
                     
                     {/* Restore button */}
-                    <div className="flex justify-end mt-1">
+                    <div className="flex justify-end">
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="flex items-center gap-1 h-7 px-2"
+                        className="flex items-center gap-1 h-6 px-2"
                         onClick={() => handleRestoreState(log.id)}
                       >
                         <HistoryIcon className="w-3 h-3" />
