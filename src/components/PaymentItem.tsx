@@ -9,6 +9,7 @@ type StatusType =
   | "Eingezogen"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
+  | "In Auszahlung"
   | "Fehler";
 
 interface PaymentItemProps {
