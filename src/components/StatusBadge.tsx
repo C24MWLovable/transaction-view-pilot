@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type StatusType = 
   | "Einzug ausstehend"
-  | "Eingezogen"
+  | "Erfolgreich"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"
@@ -27,7 +27,7 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
       bgColor = "bg-[#F7ECB5] text-black"; // Yellow
       icon = <ArrowDown className="w-3 h-3 mr-1" />;
       break;
-    case "Eingezogen":
+    case "Erfolgreich":
       bgColor = "bg-[#DBF3B7] text-black"; // Green
       icon = <Check className="w-3 h-3 mr-1" />;
       break;

@@ -20,11 +20,11 @@ export const PaymentOverview = () => {
   const customerData = {
     carRental: {
       amount: "€1.250,00",
-      status: "Eingezogen" as const
+      status: "Erfolgreich" as const
     },
     insurance: {
       amount: "€320,00",
-      status: "Eingezogen" as const // Same status as carRental
+      status: "Erfolgreich" as const // Same status as carRental
     },
     points: {
       amount: "€5,50",

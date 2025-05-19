@@ -26,20 +26,20 @@ export const DetailsSidebar = () => {
               <span className="font-medium">3251160928</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-500">Booking-ID-Hash</span>
+              <span className="text-gray-500">Booking-ID</span>
               <span className="font-medium">4pg8oi7y7b6rtsoai3</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-500">Zahlungsvorgang-ID-Hash</span>
-              <span className="font-medium text-xs break-all">pp__gFBt9WfXkgUPA_NfeNM9w8cXGKDx</span>
+              <span className="text-gray-500">Payment-Process-ID</span>
+              <span className="font-medium text-xs break-all">pp__gFBt9WfXkgUPA_NfeNM9</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
               <span className="text-gray-500">Kunde</span>
               <span className="font-medium">Max Mustermann</span>
             </div>
             <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-500">Storniert?</span>
-              <span className="font-medium">Nein</span>
+              <span className="text-gray-500">Status</span>
+              <span className="font-medium">Aktiv</span>
             </div>
           </div>
         </CardContent>

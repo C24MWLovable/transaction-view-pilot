@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type StatusType = 
   | "Einzug ausstehend"
-  | "Eingezogen"
+  | "Erfolgreich"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"
