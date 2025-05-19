@@ -1,6 +1,6 @@
 
 import { ReactNode } from "react";
-import { Check, X, ArrowUp, ArrowDown } from "lucide-react";
+import { Check, X, ArrowUp, ArrowDown, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,7 @@ type StatusType =
   | "Eingezogen"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
+  | "In Auszahlung"
   | "Fehler";
 
 interface StatusBadgeProps {
@@ -36,6 +37,10 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
     case "Rückerstattet":
       bgColor = "bg-[#DBF3B7] text-black"; // Green
       icon = <Check className="w-3 h-3 mr-1" />;
+      break;
+    case "In Auszahlung":
+      bgColor = "bg-[#F7ECB5] text-black"; // Yellow
+      icon = <Clock className="w-3 h-3 mr-1" />;
       break;
     case "Fehler":
       bgColor = "bg-[#FEE5D9] text-black"; // Red

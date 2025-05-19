@@ -1,6 +1,6 @@
 
 import { ReactNode } from "react";
-import { User, Banknote, Car, Shield } from "lucide-react";
+import { User, Banknote, Car, Shield, Award } from "lucide-react";
 import { PaymentItem } from "./PaymentItem";
 
 interface SectionHeader {
@@ -25,6 +25,10 @@ export const PaymentOverview = () => {
     insurance: {
       amount: "€320,00",
       status: "Eingezogen" as const // Same status as carRental
+    },
+    points: {
+      amount: "€5,50",
+      status: "In Auszahlung" as const
     }
   };
   
@@ -51,6 +55,13 @@ export const PaymentOverview = () => {
         amount={customerData.insurance.amount}
         status={customerData.insurance.status}
         icon={<Shield size={18} />}
+        indentLevel={1}
+      />
+      <PaymentItem 
+        title="Punkte" 
+        amount={customerData.points.amount}
+        status={customerData.points.status}
+        icon={<Award size={18} />}
         indentLevel={1}
       />
       
