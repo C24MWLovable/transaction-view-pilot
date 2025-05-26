@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "./StatusBadge";
@@ -7,6 +6,8 @@ import { cn } from "@/lib/utils";
 type StatusType = 
   | "Einzug ausstehend"
   | "Erfolgreich"
+  | "Eingezogen"
+  | "Bezahlt"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"

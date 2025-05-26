@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { Check, X, ArrowUp, ArrowDown, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +6,8 @@ import { cn } from "@/lib/utils";
 type StatusType = 
   | "Einzug ausstehend"
   | "Erfolgreich"
+  | "Eingezogen"
+  | "Bezahlt"
   | "Rückerstattung ausstehend"
   | "Rückerstattet"
   | "In Auszahlung"
@@ -28,6 +29,8 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
       icon = <ArrowDown className="w-3 h-3 mr-1" />;
       break;
     case "Erfolgreich":
+    case "Bezahlt":
+    case "Eingezogen":
       bgColor = "bg-[#DBF3B7] text-black"; // Green
       icon = <Check className="w-3 h-3 mr-1" />;
       break;
